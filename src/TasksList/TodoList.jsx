@@ -1,7 +1,9 @@
 import Task from "./Task";
 import Sort from "../Sort/Sort";
+import { useSelector } from "react-redux";
 
-const ToDoList = ({ filter, tasks, setTasks }) => {
+const ToDoList = ({ filter }) => {
+  const { tasks } = useSelector((store) => store.tasks);
   const filteredTasks = tasks.filter((task) => {
     if (filter === "all") return true;
     if (filter === "active") return !task.isDone;
@@ -10,9 +12,9 @@ const ToDoList = ({ filter, tasks, setTasks }) => {
   });
   return (
     <div className="ToDoList">
-      <Sort tasks={tasks} setTasks={setTasks} />
+      <Sort tasks={tasks} />
       {filteredTasks.map((item) => (
-        <Task key={item.id} task={item} setTasks={setTasks} />
+        <Task key={item.id} task={item} />
       ))}
     </div>
   );
