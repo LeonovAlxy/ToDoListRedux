@@ -7,23 +7,15 @@ import ActiveTasks from "./Filters/ActiveTasks";
 import "./App.css";
 
 function App() {
-  const [tasks, setTasks] = useState(() => {
-    const saved = localStorage.getItem("tasks");
-    return saved
-      ? JSON.parse(saved)
-      : [{ id: 1, title: "Купить что-то", isDone: false }];
-  });
   const [filter, setFilter] = useState("all");
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
+
   return (
     <>
       <Header />
-      <InputTask setTasks={setTasks} />
-      <ToDoList filter={filter} tasks={tasks} setTasks={setTasks} />
+      <InputTask />
+      <ToDoList filter={filter} />
       <FilterMain setFilter={setFilter} />
-      <ActiveTasks tasks={tasks} setTasks={setTasks} />
+      <ActiveTasks />
     </>
   );
 }

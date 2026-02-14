@@ -1,43 +1,31 @@
 import { useState } from "react";
-const InputTask = ({ setTasks }) => {
-  const [text, setText] = useState("");
+import { useSelector, useDispatch } from "react-redux";
+import { createAddTaskAction } from "./redux/actions/tasksActions";
+const InputTask = () => {
   const [error, setError] = useState("");
+  const { inputText } = useSelector((store) => store.inputText);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    setText(e.target.value);
+    dispatch({ type: "change", payload: e.target.value });
     setError("");
   };
-  const handleKeyDown = (e) => {
-    if (text.trim() === "") {
+  const handleSubmit = () => {
+    if (inputText.trim() === "") {
       setError("Название не может быть пустым или состоять только из пробелов");
-    } else if (e.key === "Enter") {
-      setTasks((tasks) => [
-        ...tasks,
-        {
-          id: crypto.randomUUID(),
-          title: text,
-          isDone: false,
-        },
-      ]);
+    } else {
+      dispatch(createAddTaskAction(inputText));
       setError("");
-      setText("");
+      dispatch({ type: "zero" });
+    }
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit();
     }
   };
   const handleClick = () => {
-    if (text.trim() === "") {
-      setError("Название не может быть пустым или состоять только из пробелов");
-    } else {
-      setTasks((tasks) => [
-        ...tasks,
-        {
-          id: crypto.randomUUID(),
-          title: text,
-          isDone: false,
-        },
-      ]);
-      setError("");
-      setText("");
-    }
+    handleSubmit();
   };
 
   return (
@@ -45,7 +33,7 @@ const InputTask = ({ setTasks }) => {
       {" "}
       <div className="InputTask">
         <input
-          value={text}
+          value={inputText}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           placeholder="Create task"

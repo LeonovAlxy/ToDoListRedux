@@ -1,37 +1,35 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import TaskEdit from "./TaskEdit";
+import {
+  deleteTaskAction,
+  switchIsDoneAction,
+  updateTaskAction,
+} from "../redux/actions/tasksActions";
 
-const Task = ({ task, setTasks }) => {
+const Task = ({ task }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const dispatch = useDispatch();
 
   const handleDeleteClick = (id) => {
-    setTasks((tasks) => tasks.filter((item) => item.id !== id));
+    dispatch(deleteTaskAction(id));
   };
 
   const switchIsDone = (id) => {
-    setTasks((tasks) =>
-      tasks.map((item) =>
-        item.id === id ? { ...item, isDone: !item.isDone } : item
-      )
-    );
+    dispatch(switchIsDoneAction(id));
   };
 
   const handleStartEdit = () => {
     setIsEditing(true);
   };
-
-  const handleSaveEdit = (newTitle) => {
-    if (newTitle !== "") {
-      setTasks((tasks) =>
-        tasks.map((item) =>
-          item.id === task.id ? { ...item, title: newTitle } : item
-        )
-      );
-    }
+  const handleCancelEdit = () => {
     setIsEditing(false);
   };
 
-  const handleCancelEdit = () => {
+  const handleSaveEdit = (newTitle) => {
+    if (newTitle !== "") {
+      dispatch(updateTaskAction(task.id, newTitle));
+    }
     setIsEditing(false);
   };
 
