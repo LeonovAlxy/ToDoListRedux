@@ -1,22 +1,18 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import TaskEdit from "./TaskEdit";
-import {
-  deleteTaskAction,
-  switchIsDoneAction,
-  updateTaskAction,
-} from "../redux/actions/tasksActions";
+import { deleteTask, switchIsDone, update } from "../redux/slices/tasksSlice";
 
 const Task = ({ task }) => {
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
 
   const handleDeleteClick = (id) => {
-    dispatch(deleteTaskAction(id));
+    dispatch(deleteTask(id));
   };
 
-  const switchIsDone = (id) => {
-    dispatch(switchIsDoneAction(id));
+  const switchDoneTasks = (id) => {
+    dispatch(switchIsDone(id));
   };
 
   const handleStartEdit = () => {
@@ -28,7 +24,7 @@ const Task = ({ task }) => {
 
   const handleSaveEdit = (newTitle) => {
     if (newTitle !== "") {
-      dispatch(updateTaskAction(task.id, newTitle));
+      dispatch(update({ id: task.id, newTitle }));
     }
     setIsEditing(false);
   };
@@ -38,7 +34,7 @@ const Task = ({ task }) => {
       <input
         type="checkbox"
         checked={task.isDone}
-        onChange={() => switchIsDone(task.id)}
+        onChange={() => switchDoneTasks(task.id)}
       />
       {isEditing ? (
         <TaskEdit
