@@ -1,22 +1,24 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createAddTaskAction } from "./redux/actions/tasksActions";
+import { add } from "./redux/slices/tasksSlice";
+import { change, zero } from "./redux/slices/inputTextSlice";
+
 const InputTask = () => {
   const [error, setError] = useState("");
-  const { inputText } = useSelector((store) => store.inputText);
+  const inputText = useSelector((store) => store.inputText.value);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    dispatch({ type: "change", payload: e.target.value });
+    dispatch(change(e.target.value));
     setError("");
   };
   const handleSubmit = () => {
     if (inputText.trim() === "") {
       setError("Название не может быть пустым или состоять только из пробелов");
     } else {
-      dispatch(createAddTaskAction(inputText));
+      dispatch(add(inputText));
       setError("");
-      dispatch({ type: "zero" });
+      dispatch(zero());
     }
   };
   const handleKeyDown = (e) => {
@@ -41,6 +43,7 @@ const InputTask = () => {
             borderColor: error ? "red" : undefined,
           }}
         />
+
         <button onClick={handleClick}>Add Task</button>
       </div>
       {error && <div className="error">{error}</div>}

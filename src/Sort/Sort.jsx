@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
-import { reverseTaskAction } from "../redux/actions/tasksActions";
+import { reverse } from "../redux/slices/tasksSlice";
 const Sort = () => {
   const dispatch = useDispatch();
   const handleClick = () => {
-    dispatch(reverseTaskAction());
+    dispatch(reverse());
   };
   return (
     <button className="Sort" onClick={() => handleClick()}>
