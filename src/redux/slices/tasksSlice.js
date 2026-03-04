@@ -17,21 +17,24 @@ const tasksSlice = createSlice({
     },
 
     deleteTask(state, action) {
-      state.tasks = state.tasks.filter((item) => item.id !== action.payload);
+      const index = state.tasks.findIndex((item) => item.id === action.payload);
+      if (index !== -1) {
+        state.tasks.splice(index, 1);
+      }
     },
 
     switchIsDone(state, action) {
-      state.tasks = state.tasks.map((item) =>
-        item.id === action.payload ? { ...item, isDone: !item.isDone } : item,
-      );
+      const task = state.tasks.find((item) => item.id === action.payload);
+      if (task) {
+        task.isDone = !task.isDone;
+      }
     },
 
     update(state, action) {
-      state.tasks = state.tasks.map((task) =>
-        task.id === action.payload.id
-          ? { ...task, title: action.payload.newTitle }
-          : task,
-      );
+      const task = state.tasks.find((task) => task.id === action.payload.id);
+      if (task) {
+        task.title = action.payload.newTitle;
+      }
     },
     reverse(state) {
       state.tasks.reverse();
