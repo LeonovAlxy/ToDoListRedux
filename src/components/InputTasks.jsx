@@ -1,28 +1,31 @@
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { add } from "./redux/slices/tasksSlice";
-import { change, zero } from "./redux/slices/inputTextSlice";
+import { useState } from 'react';
+
+import { useSelector, useDispatch } from 'react-redux';
+
+import { add } from '../redux/slices/tasksSlice';
+
+import { change, zero, selectInputText } from '../redux/slices/inputTextSlice';
 
 const InputTask = () => {
-  const [error, setError] = useState("");
-  const inputText = useSelector((store) => store.inputText.value);
+  const [error, setError] = useState('');
+  const inputText = useSelector(selectInputText);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
     dispatch(change(e.target.value));
-    setError("");
+    setError('');
   };
   const handleSubmit = () => {
-    if (inputText.trim() === "") {
-      setError("Название не может быть пустым или состоять только из пробелов");
+    if (inputText.trim() === '') {
+      setError('Название не может быть пустым или состоять только из пробелов');
     } else {
       dispatch(add(inputText));
-      setError("");
+      setError('');
       dispatch(zero());
     }
   };
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       handleSubmit();
     }
   };
@@ -32,7 +35,7 @@ const InputTask = () => {
 
   return (
     <>
-      {" "}
+      {' '}
       <div className="InputTask">
         <input
           value={inputText}
@@ -40,7 +43,7 @@ const InputTask = () => {
           onKeyDown={handleKeyDown}
           placeholder="Create task"
           style={{
-            borderColor: error ? "red" : undefined,
+            borderColor: error ? 'red' : undefined,
           }}
         />
 
@@ -50,4 +53,5 @@ const InputTask = () => {
     </>
   );
 };
+
 export default InputTask;

@@ -1,5 +1,6 @@
-import { useSelector, useDispatch } from "react-redux";
-import { removeFinished } from "../redux/slices/tasksSlice";
+import { useSelector, useDispatch } from 'react-redux';
+
+import { removeFinished } from '../../redux/slices/tasksSlice';
 
 const ActiveCounter = () => {
   const { tasks } = useSelector((store) => store.tasks);
@@ -8,6 +9,7 @@ const ActiveCounter = () => {
     dispatch(removeFinished());
   };
   const activeTasks = tasks.filter((item) => !item.isDone);
+
   return (
     <div className="ActiveCounter">
       <p>Active: {activeTasks.length}</p>
@@ -15,4 +17,5 @@ const ActiveCounter = () => {
     </div>
   );
 };
+
 export default ActiveCounter;

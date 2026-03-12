@@ -1,7 +1,10 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import TaskEdit from "./TaskEdit";
-import { deleteTask, switchIsDone, update } from "../redux/slices/tasksSlice";
+import { useState } from 'react';
+
+import { useDispatch } from 'react-redux';
+
+import TaskEdit from './TaskEdit';
+
+import { deleteTask, switchIsDone, update } from '../../redux/slices/tasksSlice';
 
 const Task = ({ task }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -23,7 +26,7 @@ const Task = ({ task }) => {
   };
 
   const handleSaveEdit = (newTitle) => {
-    if (newTitle !== "") {
+    if (newTitle !== '') {
       dispatch(update({ id: task.id, newTitle }));
     }
     setIsEditing(false);
@@ -31,20 +34,12 @@ const Task = ({ task }) => {
 
   return (
     <div className="Task">
-      <input
-        type="checkbox"
-        checked={task.isDone}
-        onChange={() => switchDoneTasks(task.id)}
-      />
+      <input type="checkbox" checked={task.isDone} onChange={() => switchDoneTasks(task.id)} />
       {isEditing ? (
-        <TaskEdit
-          initialTitle={task.title}
-          onSave={handleSaveEdit}
-          onCancel={handleCancelEdit}
-        />
+        <TaskEdit initialTitle={task.title} onSave={handleSaveEdit} onCancel={handleCancelEdit} />
       ) : (
         <>
-          <p className={task.isDone ? "active" : ""}>{task.title}</p>
+          <p className={task.isDone ? 'active' : ''}>{task.title}</p>
           <button onClick={handleStartEdit}>change</button>
         </>
       )}
@@ -52,4 +47,5 @@ const Task = ({ task }) => {
     </div>
   );
 };
+
 export default Task;

@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from 'react';
 
 const TaskEdit = ({ initialTitle, onSave, onCancel }) => {
   const [editTitle, setEditTitle] = useState(initialTitle);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -16,12 +16,12 @@ const TaskEdit = ({ initialTitle, onSave, onCancel }) => {
   };
 
   const handleKeyDown = (e) => {
-    if (editTitle.trim() === "") {
-      setError("Не может быть пустым");
-    } else if (e.key === "Enter") {
+    if (editTitle.trim() === '') {
+      setError('Не может быть пустым');
+    } else if (e.key === 'Enter') {
       onSave(editTitle.trim());
-      setError("");
-    } else if (e.key === "Escape") {
+      setError('');
+    } else if (e.key === 'Escape') {
       onCancel();
     }
   };
@@ -41,8 +41,8 @@ const TaskEdit = ({ initialTitle, onSave, onCancel }) => {
         onKeyDown={handleKeyDown}
         onBlur={handleBlur}
         style={{
-          borderColor: error ? "red" : undefined,
-          color: error ? "red" : "inherit",
+          borderColor: error ? 'red' : undefined,
+          color: error ? 'red' : 'inherit',
         }}
       />
     </>

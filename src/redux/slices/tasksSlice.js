@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  tasks: [{ id: crypto.randomUUID(), title: "Купить что-то", isDone: false }],
+  tasks: [{ id: crypto.randomUUID(), title: 'Купить что-то', isDone: false }],
 };
 
 const tasksSlice = createSlice({
-  name: "tasks",
+  name: 'tasks',
   initialState,
   reducers: {
     add(state, action) {
@@ -44,13 +44,14 @@ const tasksSlice = createSlice({
       state.tasks = state.tasks.filter((task) => !task.isDone);
     },
   },
+  selectors: {
+    selectTasks: (state) => state.tasks,
+  },
 });
-export const {
-  add,
-  deleteTask,
-  switchIsDone,
-  update,
-  reverse,
-  removeFinished,
-} = tasksSlice.actions;
+
+export const { add, deleteTask, switchIsDone, update, reverse, removeFinished } =
+  tasksSlice.actions;
+
+export const { selectTasks } = tasksSlice.selectors;
+
 export default tasksSlice.reducer;
